@@ -19,7 +19,7 @@ dependencies {
     api "com.netflix.ribbon:ribbon-core:${versions_ribbon}"
     api "com.netflix.ribbon:ribbon-archaius:${versions_ribbon}"
 
-    api "com.netflix.eureka:eureka-client:1.9.18"
+    api "com.netflix.eureka:eureka-client:1.10.14"
     api "io.reactivex:rxjava:1.2.1"
 
     // TODO(carl-mastrangelo): some of these could probably be implementation.   Do a deeper check.
