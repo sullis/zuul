@@ -18,6 +18,7 @@ package com.netflix.netty.common.throttle;
 
 import static com.netflix.netty.common.throttle.MaxInboundConnectionsHandler.ATTR_CH_THROTTLED;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import com.netflix.spectator.api.Counter;
 import com.netflix.spectator.api.DefaultRegistry;
@@ -51,13 +52,16 @@ public class MaxInboundConnectionsHandlerTest {
         channel.pipeline().addLast(new DummyChannelHandler());
         channel.pipeline().addLast(new MaxInboundConnectionsHandler(registry, listener, 1));
 
-        // Fire twice to increment current conns. count
-        channel.pipeline().context(DummyChannelHandler.class).fireChannelActive();
-        channel.pipeline().context(DummyChannelHandler.class).fireChannelActive();
-
         final Counter throttledCount = (Counter) registry.get(counterId);
 
+        channel.pipeline().context(DummyChannelHandler.class).fireChannelActive();
+        assertEquals(0, throttledCount.count());
+        assertTrue(channel.isActive());
+
+        channel.pipeline().context(DummyChannelHandler.class).fireChannelActive();
         assertEquals(1, throttledCount.count());
+        assertFalse(channel.isActive());
+
         assertEquals(PassportState.SERVER_CH_THROTTLING, CurrentPassport.fromChannel(channel).getState());
         assertTrue(channel.attr(ATTR_CH_THROTTLED).get());
 
