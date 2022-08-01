@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="defaultPattern">%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %-5level [%t] %c: %msg%n
+        </Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${defaultPattern}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com" level="warn"/>
+        <Logger name="org" level="warn"/>
+        <Logger name="io" level="warn"/>
+        <Logger name="com.netflix" level="warn"/>
+        <Logger name="org.springframework" level="warn"/>
+        <Logger name="io.grpc" level="error"/>
+        <Logger name="org.apache.http.wire" level="error"/>
+        <Logger name="org.apache.http" level="warn"/>
+        <Root level="info">
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
