@@ -19,7 +19,7 @@ package com.netflix.netty.common.metrics;
 import com.netflix.spectator.api.Id;
 import com.netflix.spectator.api.Registry;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
  * User: michaels@netflix.com
@@ -29,8 +29,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class EventLoopMetrics implements EventLoopGroupMetrics.EventLoopInfo
 {
     private final String name;
-    public final AtomicInteger currentRequests = new AtomicInteger(0);
-    public final AtomicInteger currentConnections = new AtomicInteger(0);
+    public final LongAdder currentRequests = new LongAdder();
+    public final LongAdder currentConnections = new LongAdder();
 
     private final Registry registry;
     private final Id currentRequestsId;
@@ -48,37 +48,37 @@ public class EventLoopMetrics implements EventLoopGroupMetrics.EventLoopInfo
     @Override
     public int currentConnectionsCount()
     {
-        return currentConnections.get();
+        return currentConnections.intValue();
     }
 
     @Override
     public int currentHttpRequestsCount()
     {
-        return currentRequests.get();
+        return currentRequests.intValue();
     }
 
     public void incrementCurrentRequests()
     {
-        int value = this.currentRequests.incrementAndGet();
-        updateGauge(currentRequestsId, value);
+        this.currentRequests.increment();
+        updateGauge(currentRequestsId, this.currentRequests.intValue());
     }
 
     public void decrementCurrentRequests()
     {
-        int value = this.currentRequests.decrementAndGet();
-        updateGauge(currentRequestsId, value);
+        this.currentRequests.decrement();
+        updateGauge(currentRequestsId, this.currentRequests.intValue());
     }
 
     public void incrementCurrentConnections()
     {
-        int value = this.currentConnections.incrementAndGet();
-        updateGauge(currentConnectionsId, value);
+        this.currentConnections.increment();
+        updateGauge(currentConnectionsId, this.currentConnections.intValue());
     }
 
     public void decrementCurrentConnections()
     {
-        int value = this.currentConnections.decrementAndGet();
-        updateGauge(currentConnectionsId, value);
+        this.currentConnections.decrement();
+        updateGauge(currentConnectionsId, this.currentConnections.intValue());
     }
 
     private void updateGauge(Id gaugeId, int value)
