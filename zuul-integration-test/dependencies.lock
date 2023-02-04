@@ -693,6 +693,9 @@
             ],
             "locked": "1.70"
         },
+        "org.glassfish.tyrus.bundles:tyrus-standalone-client": {
+            "locked": "2.1.2"
+        },
         "org.junit.jupiter:junit-jupiter-api": {
             "locked": "5.9.2"
         },
@@ -1057,6 +1060,9 @@
         "javax.servlet:javax.servlet-api": {
             "locked": "4.0.1"
         },
+        "org.glassfish.tyrus.bundles:tyrus-standalone-client": {
+            "locked": "2.1.2"
+        },
         "org.junit.jupiter:junit-jupiter-api": {
             "locked": "5.9.2"
         },
@@ -1308,6 +1314,9 @@
                 "com.netflix.zuul:zuul-core"
             ],
             "locked": "1.70"
+        },
+        "org.glassfish.tyrus.bundles:tyrus-standalone-client": {
+            "locked": "2.1.2"
         },
         "org.junit.jupiter:junit-jupiter-api": {
             "locked": "5.9.2"
