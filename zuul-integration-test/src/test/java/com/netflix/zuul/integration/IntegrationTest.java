@@ -25,10 +25,12 @@ import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.google.common.collect.ImmutableSet;
 import com.netflix.client.config.CommonClientConfigKey;
 import com.netflix.config.ConfigurationManager;
-import com.netflix.netty.common.metrics.CustomLeakDetector;
+import com.netflix.spectator.api.DefaultRegistry;
 import com.netflix.zuul.integration.server.Bootstrap;
 import com.netflix.zuul.integration.server.HeaderNames;
 import com.netflix.zuul.integration.server.TestUtil;
+import com.netflix.zuul.netty.NettyLeakListener;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.handler.codec.compression.Brotli;
 import io.netty.util.ResourceLeakDetector;
 import okhttp3.HttpUrl;
@@ -74,19 +76,13 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static com.google.common.truth.Truth.assertThat;
-import static com.netflix.netty.common.metrics.CustomLeakDetector.assertZeroLeaks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class IntegrationTest {
 
-    static {
-        System.setProperty("io.netty.customResourceLeakDetector",
-            CustomLeakDetector.class.getCanonicalName());
-    }
-
-
+    static private NettyLeakListener leakListener;
     static private Bootstrap bootstrap;
     static private final int ZUUL_SERVER_PORT = findAvailableTcpPort();
 
@@ -105,6 +101,9 @@ class IntegrationTest {
 
     @BeforeAll
     static void beforeAll() {
+        leakListener = new NettyLeakListener(new DefaultRegistry());
+        ByteBufUtil.setLeakListener(leakListener);
+
         assertTrue(ResourceLeakDetector.isEnabled());
         assertEquals(ResourceLeakDetector.Level.PARANOID, ResourceLeakDetector.getLevel());
 
@@ -126,7 +125,6 @@ class IntegrationTest {
         }
         assertZeroLeaks();
     }
-
 
     @BeforeEach
     void beforeEachTest(final WireMockRuntimeInfo wmRuntimeInfo) {
@@ -492,4 +490,7 @@ class IntegrationTest {
         assertThat(response.header(HeaderNames.REQUEST_ID)).startsWith("RQ-");
     }
 
+    private static void assertZeroLeaks() {
+        assertThat(leakListener.getLeakCount()).isEqualTo(0);
+    }
 }
