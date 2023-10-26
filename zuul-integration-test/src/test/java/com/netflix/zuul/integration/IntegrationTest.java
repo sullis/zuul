@@ -106,7 +106,9 @@ class IntegrationTest {
             .configureStaticDsl(true)
             .options(wireMockConfig()
                     .maxLoggedResponseSize(1000)
-                    .dynamicPort()
+                    .dynamicHttpsPort()
+                    .httpDisabled(true)
+                    .needClientAuth(false)
                     .useChunkedTransferEncoding(Options.ChunkedEncodingPolicy.ALWAYS)
                     .notifier(new Slf4jNotifier(true)))
             .build();
@@ -118,12 +120,15 @@ class IntegrationTest {
         assertTrue(ResourceLeakDetector.isEnabled());
         assertEquals(ResourceLeakDetector.Level.PARANOID, ResourceLeakDetector.getLevel());
 
-        final int wireMockPort = wireMockExtension.getPort();
+        System.out.println("wiremock https port: " + wireMockExtension.getHttpsPort());
+
+        final int wireMockPort = wireMockExtension.getHttpsPort();
         AbstractConfiguration config = ConfigurationManager.getConfigInstance();
         config.setProperty("zuul.server.netty.socket.force_nio", "true");
         config.setProperty("zuul.server.port.main", ZUUL_SERVER_PORT);
         config.setProperty("api.ribbon.listOfServers", "127.0.0.1:" + wireMockPort);
         config.setProperty("api.ribbon." + CommonClientConfigKey.ReadTimeout.key(), ORIGIN_READ_TIMEOUT.toMillis());
+        config.setProperty("api.ribbon." + CommonClientConfigKey.IsSecure.key(), "true");
         bootstrap = new Bootstrap();
         bootstrap.start();
         assertTrue(bootstrap.isRunning());
