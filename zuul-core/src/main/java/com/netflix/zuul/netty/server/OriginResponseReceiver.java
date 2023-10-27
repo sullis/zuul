@@ -90,6 +90,7 @@ public class OriginResponseReceiver extends ChannelDuplexHandler {
             ctx.channel().read();
         } else if (msg instanceof HttpContent) {
             final HttpContent chunk = (HttpContent) msg;
+            System.out.println("chunk: " + chunk.content().readableBytes());
             if (edgeProxy != null) {
                 edgeProxy.invokeNext(chunk);
             } else {

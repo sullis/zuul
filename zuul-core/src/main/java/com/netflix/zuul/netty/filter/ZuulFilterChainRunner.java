@@ -113,6 +113,8 @@ public class ZuulFilterChainRunner<T extends ZuulMessage> extends BaseZuulFilter
                 if ((!filter.isDisabled()) && (!shouldSkipFilter(inMesg, filter))) {
                     ByteBufUtil.touch(chunk, "Filter runner processing chunk, filter: ", filterName);
                     final HttpContent newChunk = filter.processContentChunk(inMesg, chunk);
+                    System.out.println("ZuulFilterChainRunner: " + filter.filterName() + " newChunk == chunk "
+                            + (newChunk == chunk));
                     if (newChunk == null) {
                         // Filter wants to break the chain and stop propagating this chunk any further
                         return;
@@ -132,6 +134,10 @@ public class ZuulFilterChainRunner<T extends ZuulMessage> extends BaseZuulFilter
                 invokeNextStage(inMesg, chunk);
             } else {
                 ByteBufUtil.touch(chunk, "Filter runner buffering chunk, message: ", inMesg);
+                if (inMesg instanceof HttpResponseMessage) {
+                    System.out.println("FilterChainRunner calling bufferBodyContents for chunk "
+                            + chunk.content().readableBytes());
+                }
                 inMesg.bufferBodyContents(chunk);
 
                 boolean isAwaitingBody = isFilterAwaitingBody(inMesg.getContext());

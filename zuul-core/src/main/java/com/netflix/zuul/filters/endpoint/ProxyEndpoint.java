@@ -370,6 +370,7 @@ public class ProxyEndpoint extends SyncZuulFilterAdapter<HttpRequestMessage, Htt
     }
 
     private void filterResponseChunk(final HttpContent chunk) {
+        System.out.println("filterResponseChunk: chunk " + chunk.content().readableBytes());
         if (context.isCancelled() || !channelCtx.channel().isActive()) {
             SpectatorUtils.newCounter(
                             "zuul.origin.strayChunk",

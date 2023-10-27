@@ -144,6 +144,7 @@ public class ZuulEndPointRunner extends BaseZuulFilterRunner<HttpRequestMessage,
 
             ByteBufUtil.touch(chunk, "Endpoint processing chunk, ZuulMessage: ", zuulReq);
             final HttpContent newChunk = endpoint.processContentChunk(zuulReq, chunk);
+            System.out.println("ZuulEndpointRunner: newChunk " + newChunk);
             if (newChunk != null) {
                 ByteBufUtil.touch(newChunk, "Endpoint buffering newChunk, ZuulMessage: ", zuulReq);
                 // Endpoints do not directly forward content chunks to next stage in the filter chain.
