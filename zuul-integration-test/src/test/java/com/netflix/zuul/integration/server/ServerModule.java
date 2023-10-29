@@ -31,7 +31,6 @@ import com.netflix.zuul.context.ZuulSessionContextDecorator;
 import com.netflix.zuul.filters.FilterRegistry;
 import com.netflix.zuul.filters.MutableFilterRegistry;
 import com.netflix.zuul.init.ZuulFiltersModule;
-import com.netflix.zuul.netty.connectionpool.OriginChannelInitializer;
 import com.netflix.zuul.netty.server.BaseServerStartup;
 import com.netflix.zuul.netty.server.ClientRequestReceiver;
 import com.netflix.zuul.origins.BasicNettyOriginManager;
@@ -62,8 +61,6 @@ public class ServerModule extends AbstractModule {
 
         // use provided basic netty origin manager
         bind(OriginManager.class).to(BasicNettyOriginManager.class);
-
-        bind(OriginChannelInitializer.class).to(CustomOriginChannelInitializer.class);
 
         // zuul filter loading
         install(new ZuulFiltersModule());
