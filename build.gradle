@@ -120,7 +120,7 @@ subprojects {
                 okhttp: 'com.squareup.okhttp3:okhttp:4.12.0',
                 jupiterApi: 'org.junit.jupiter:junit-jupiter-api:5.11.+',
                 jupiterParams: 'org.junit.jupiter:junit-jupiter-params:5.11.+',
-                jupiterEngine: 'org.junit.jupiter:junit-jupiter-engine:5.11.+',
+                jupiterEngine: 'org.junit.jupiter:junit-jupiter-engine:5.12.+',
                 jupiterMockito: 'org.mockito:mockito-junit-jupiter:5.11.+',
                 mockito: 'org.mockito:mockito-core:5.+',
 
