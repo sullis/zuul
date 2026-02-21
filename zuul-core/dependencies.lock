@@ -1,7 +1,7 @@
 {
     "annotationProcessor": {
         "com.google.errorprone:error_prone_core": {
-            "locked": "2.36.0"
+            "locked": "2.45.0"
         },
         "com.uber.nullaway:nullaway": {
             "locked": "0.12.4"
@@ -104,6 +104,9 @@
         "org.bouncycastle:bctls-jdk18on": {
             "locked": "1.78.1"
         },
+        "org.jspecify:jspecify": {
+            "locked": "1.0.0"
+        },
         "org.projectlombok:lombok": {
             "locked": "1.18.42"
         },
@@ -129,7 +132,7 @@
     },
     "jmhAnnotationProcessor": {
         "com.google.errorprone:error_prone_core": {
-            "locked": "2.36.0"
+            "locked": "2.45.0"
         },
         "com.uber.nullaway:nullaway": {
             "locked": "0.12.4"
@@ -228,6 +231,9 @@
         },
         "org.bouncycastle:bctls-jdk18on": {
             "locked": "1.78.1"
+        },
+        "org.jspecify:jspecify": {
+            "locked": "1.0.0"
         },
         "org.openjdk.jmh:jmh-core": {
             "locked": "1.37"
@@ -369,6 +375,9 @@
         "org.bouncycastle:bctls-jdk18on": {
             "locked": "1.78.1"
         },
+        "org.jspecify:jspecify": {
+            "locked": "1.0.0"
+        },
         "org.junit.jupiter:junit-jupiter-api": {
             "locked": "5.13.4"
         },
@@ -400,10 +409,10 @@
             "firstLevelTransitive": [
                 "com.netflix.zuul:zuul-discovery"
             ],
-            "locked": "2.0.16"
+            "locked": "2.0.17"
         },
         "org.slf4j:slf4j-simple": {
-            "locked": "2.0.13"
+            "locked": "2.0.17"
         }
     },
     "runtimeClasspath": {
@@ -521,6 +530,9 @@
         "org.bouncycastle:bctls-jdk18on": {
             "locked": "1.78.1"
         },
+        "org.jspecify:jspecify": {
+            "locked": "1.0.0"
+        },
         "org.slf4j:slf4j-api": {
             "firstLevelTransitive": [
                 "com.netflix.zuul:zuul-discovery"
@@ -530,7 +542,7 @@
     },
     "testAnnotationProcessor": {
         "com.google.errorprone:error_prone_core": {
-            "locked": "2.36.0"
+            "locked": "2.45.0"
         },
         "com.uber.nullaway:nullaway": {
             "locked": "0.12.4"
@@ -639,6 +651,9 @@
         "org.bouncycastle:bctls-jdk18on": {
             "locked": "1.78.1"
         },
+        "org.jspecify:jspecify": {
+            "locked": "1.0.0"
+        },
         "org.junit.jupiter:junit-jupiter-api": {
             "locked": "5.13.4"
         },
@@ -656,6 +671,9 @@
         },
         "org.mockito:mockito-junit-jupiter": {
             "locked": "5.13.0"
+        },
+        "org.projectlombok:lombok": {
+            "locked": "1.18.42"
         },
         "org.slf4j:slf4j-api": {
             "locked": "2.0.16"
@@ -785,6 +803,9 @@
         "org.bouncycastle:bctls-jdk18on": {
             "locked": "1.78.1"
         },
+        "org.jspecify:jspecify": {
+            "locked": "1.0.0"
+        },
         "org.junit.jupiter:junit-jupiter-api": {
             "locked": "5.13.4"
         },
@@ -807,10 +828,10 @@
             "firstLevelTransitive": [
                 "com.netflix.zuul:zuul-discovery"
             ],
-            "locked": "2.0.16"
+            "locked": "2.0.17"
         },
         "org.slf4j:slf4j-simple": {
-            "locked": "2.0.13"
+            "locked": "2.0.17"
         }
     }
 }

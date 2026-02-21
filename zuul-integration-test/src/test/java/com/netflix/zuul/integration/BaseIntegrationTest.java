@@ -39,9 +39,9 @@ import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.github.tomakehurst.wiremock.stubbing.Scenario;
 import com.google.common.collect.ImmutableSet;
 import com.netflix.config.ConfigurationManager;
-import com.netflix.netty.common.metrics.CustomLeakDetector;
 import com.netflix.zuul.integration.server.HeaderNames;
 import com.netflix.zuul.integration.server.TestUtil;
+import io.github.nettyplus.leakdetector.junit.NettyLeakDetectorExtension;
 import io.netty.channel.epoll.Epoll;
 import io.netty.handler.codec.compression.Brotli;
 import io.netty.util.ResourceLeakDetector;
@@ -90,12 +90,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 abstract class BaseIntegrationTest {
 
-    static {
-        System.setProperty("io.netty.customResourceLeakDetector", CustomLeakDetector.class.getCanonicalName());
-    }
-
     private static final Duration CLIENT_READ_TIMEOUT = Duration.ofSeconds(3);
     static final Duration ORIGIN_READ_TIMEOUT = Duration.ofSeconds(1);
+
+    @RegisterExtension
+    static NettyLeakDetectorExtension leakDetector = new NettyLeakDetectorExtension();
 
     @RegisterExtension
     static WireMockExtension wireMockExtension = WireMockExtension.newInstance()
@@ -114,12 +113,10 @@ abstract class BaseIntegrationTest {
         int wireMockPort = wireMockExtension.getPort();
         AbstractConfiguration config = ConfigurationManager.getConfigInstance();
         config.setProperty("api.ribbon.listOfServers", "127.0.0.1:" + wireMockPort);
-        CustomLeakDetector.assertZeroLeaks();
     }
 
     @AfterAll
     static void afterAll() {
-        CustomLeakDetector.assertZeroLeaks();
         ConfigurationManager.getConfigInstance().clear();
     }
 
